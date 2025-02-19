@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "TaskMasterFontend": {
+    "TaskMasterFrontend": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/task-master-fontend",
+            "outputPath": "dist/task-master-frontend",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -60,10 +60,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "TaskMasterFontend:build:production"
+              "browserTarget": "TaskMasterFrontend:build:production"
             },
             "development": {
-              "browserTarget": "TaskMasterFontend:build:development"
+              "browserTarget": "TaskMasterFrontend:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -71,7 +71,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "TaskMasterFontend:build"
+            "browserTarget": "TaskMasterFrontend:build"
           }
         },
         "test": {
@@ -94,5 +94,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "88f8194f-4492-49a6-b15d-deb83a667bca"
   }
 }
