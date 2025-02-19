@@ -37,10 +37,7 @@ hideUpdate:boolean =true
     this.getTasks();
   }
 
-  // ngAfterViewInit(): void {
-  //   this.modalInstance = new Modal(this.TaskModal.nativeElement);
-  // }
- addTask():void{
+  addTask(taskForm: any):void{
      if (!this.nuevaTarea.titulo || !this.nuevaTarea.descripcion || !this.nuevaTarea.fecha_vencimiento) {
       alert('Todos los campos son obligatorios.');
        return;
@@ -50,8 +47,9 @@ hideUpdate:boolean =true
        next: (response) => {
          alert('Tarea guardada correctamente.');
          this.tasks.push(response);
-        this.limpiarFormulario();
-        //  this.modalInstance.hide();
+         this.limpiarFormulario(taskForm);
+         this.cerrarModal()
+
        },
        error: (err) => {
          console.error('Error al crear tarea:', err);
@@ -60,7 +58,26 @@ hideUpdate:boolean =true
      });
  }
 
-  limpiarFormulario() {
+  cerrarModal() {
+    const modalElement = document.getElementById('TaskModal');
+    if (modalElement) {
+      const modalInstance = Modal.getInstance(modalElement) || new Modal(modalElement);
+      modalInstance.hide();
+    }
+
+    const backdrop = document.querySelector('.modal-backdrop');
+    if (backdrop) {
+      backdrop.remove();
+    }
+    document.body.classList.remove('modal-open');
+    document.body.style.overflow = 'auto';
+  }
+
+  limpiarFormulario(taskForm?: any) {
+    if (taskForm) {
+      taskForm.resetForm();
+    }
+
     this.nuevaTarea = {
       titulo: '',
       descripcion: '',
