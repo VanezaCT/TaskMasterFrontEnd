@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { TaskService } from './services/task.service';
+import { Modal } from 'bootstrap';
 
 interface Task {
   id?:string;
@@ -14,9 +15,12 @@ interface Task {
   templateUrl: './task.component.html',
   styleUrls: ['./task.component.scss']
 })
+
+
+
 export class TaskComponent {
 
-  msg:string = ''
+msg:string = ''
 tasks:any[] =[]
 model2:any = {}
 hideUpdate:boolean =true
@@ -33,22 +37,25 @@ hideUpdate:boolean =true
     this.getTasks();
   }
 
+  // ngAfterViewInit(): void {
+  //   this.modalInstance = new Modal(this.TaskModal.nativeElement);
+  // }
  addTask():void{
      if (!this.nuevaTarea.titulo || !this.nuevaTarea.descripcion || !this.nuevaTarea.fecha_vencimiento) {
-       this.msg = 'Por favor, completa todos los campos.';
+      alert('Todos los campos son obligatorios.');
        return;
      }
 
      this.taskService.createTask(this.nuevaTarea).subscribe({
        next: (response) => {
-         console.log('Tarea creada:', response);
-         this.msg = 'Tarea creada con éxito!';
+         alert('Tarea guardada correctamente.');
          this.tasks.push(response);
-         this.limpiarFormulario();
+        this.limpiarFormulario();
+        //  this.modalInstance.hide();
        },
        error: (err) => {
          console.error('Error al crear tarea:', err);
-         this.msg = 'Hubo un error al crear la tarea.';
+         alert('Hubo un error al crear la tarea');
        }
      });
  }

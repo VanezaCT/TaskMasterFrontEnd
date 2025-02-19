@@ -47,7 +47,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   login() {
     const val = this.form.value;
 
-
     if (this.form.valid) {
 
       this.loginModel= { 'email': val.email, 'password': val.password };

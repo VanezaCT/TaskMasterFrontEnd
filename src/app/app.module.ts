@@ -6,11 +6,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { TaskComponent } from './modules/task/task.component';
+import { NavbarComponent } from './modules/navbar/navbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TaskComponent
+    TaskComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

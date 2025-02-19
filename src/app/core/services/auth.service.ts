@@ -4,12 +4,10 @@ import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { LoginModel } from '../models/login.model';
 import { UserModel } from '../models/user.model';
-
 interface LoginResponse {
   token_type: string;
   accessToken: string;
 }
-
 @Injectable({
   providedIn: 'root'
 })
@@ -17,20 +15,19 @@ interface LoginResponse {
 export class AuthService {
 
   private URL = 'http://127.0.0.1:8000/api/auth';
+  private authStatus = new BehaviorSubject<boolean>(this.isAuthenticated());
+
+  // authStatus$ = this.authStatus.asObservable()
   msg$ = new BehaviorSubject<string | null>(null);
   msg: string | null = null;
 
   private isLoggedInSubject = new BehaviorSubject<boolean>(this.hasToken()); // Inicializa según el token
   isLoggedIn = this.isLoggedInSubject.asObservable(); // Observable para los componentes
 
-
   private currentLoginMsgSubject = new BehaviorSubject<string | null>(null);
   currentLoginMsg = this.currentLoginMsgSubject.asObservable();
 
-
   constructor(private httpClient: HttpClient, private router: Router) { }
-
-
 
   login(loginModel: LoginModel) {
     console.log(loginModel)
@@ -54,10 +51,14 @@ export class AuthService {
   logout() {
     localStorage.removeItem('token');
     this.isLoggedInSubject.next(false);
-    this.router.navigate(['/login']);
+    this.router.navigate(['/auth/login']);
   }
 
   private hasToken(): boolean {
+    return !!localStorage.getItem('token');
+  }
+
+  isAuthenticated(): boolean {
     return !!localStorage.getItem('token');
   }
 
@@ -70,4 +71,5 @@ export class AuthService {
 
     return this.httpClient.post(`${this.URL}/register`, user, { observe: 'response', responseType: 'json' });
   }
+
 }
